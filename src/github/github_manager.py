@@ -10,7 +10,6 @@ class GitHubManager:
             # Test authentication
             self.user = self.gh.get_user()
             print(f"Successfully authenticated as: {self.user.login}")
-            print(f"Token has access to: {[repo.full_name for repo in self.user.get_repos()[:5]]}")
         except Exception as e:
             print(f"Authentication failed: {str(e)}")
             raise

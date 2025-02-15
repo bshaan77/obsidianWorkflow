@@ -66,17 +66,40 @@ Name your files with the `git` prefix to indicate repository creation:
 
 ### Running the Tool
 
-Process all git-prefixed files in a directory:
+There are several ways to run the tool:
 
-```bash
-python -m src.parser.obsidian_parser /path/to/your/notes
-```
-
-Or use the default `examples` directory:
+1. Using the default examples directory:
 
 ```bash
 python -m src.parser.obsidian_parser
 ```
+
+2. Specifying a custom directory:
+
+```bash
+python -m src.parser.obsidian_parser --directory /path/to/your/notes
+```
+
+3. Directly using your Obsidian vault:
+
+```bash
+python -m src.parser.obsidian_parser --obsidian-vault /path/to/obsidian/vault
+```
+
+> **Note about Obsidian Vaults**: An Obsidian vault is simply the folder where you store
+> your Obsidian notes. This is typically found in:
+>
+> - Windows: `C:\Users\YourName\Documents\Obsidian\YourVaultName`
+> - Mac: `/Users/YourName/Documents/Obsidian/YourVaultName`
+> - Linux: `/home/YourName/Documents/Obsidian/YourVaultName`
+
+The tool will only process markdown files that start with `git ` in the specified directory.
+All other files will be left untouched.
+
+Available options:
+
+- `-d, --directory`: Specify a directory containing git-prefixed markdown files
+- `--obsidian-vault`: Directly specify your Obsidian vault location
 
 ## Project Structure
 

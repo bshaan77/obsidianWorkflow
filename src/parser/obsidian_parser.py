@@ -1,5 +1,6 @@
 import re
 import os
+import argparse
 from typing import Dict, List
 from src.models.models import Ticket
 from src.github.github_manager import GitHubManager
@@ -128,6 +129,22 @@ def process_directory(directory_path: str, github_token: str) -> None:
                 print(f"Some errors occurred while processing {repo_name}")
 
 if __name__ == "__main__":
+    # Set up argument parser
+    parser = argparse.ArgumentParser(
+        description='Convert Obsidian notes into GitHub repositories and issues.'
+    )
+    parser.add_argument(
+        '-d', '--directory',
+        default='examples',
+        help='Directory containing git-prefixed markdown files (default: examples)'
+    )
+    parser.add_argument(
+        '--obsidian-vault',
+        help='Path to your Obsidian vault directory'
+    )
+
+    args = parser.parse_args()
+
     # Load GitHub token from environment
     load_dotenv()
     github_token = os.getenv('GITHUB_TOKEN')
@@ -136,12 +153,7 @@ if __name__ == "__main__":
         print("Error: GITHUB_TOKEN not found in environment variables")
         exit(1)
     
-    # Get directory from command line or use default
-    import sys
-    if len(sys.argv) > 1:
-        directory = sys.argv[1]
-    else:
-        directory = "examples"  # Default directory
-    
+    # Use obsidian vault path if provided, otherwise use directory argument
+    directory = args.obsidian_vault if args.obsidian_vault else args.directory
     print(f"\nProcessing markdown files in: {directory}")
     process_directory(directory, github_token) 
